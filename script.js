@@ -23,3 +23,14 @@ var getCurrentConditions = (event) => {
         return response.json();
     })
     .then((response) => {
+   // Save city to local storage
+   saveCity(city);
+   $('#search-error').text("");
+   // Create icon for the current weather using Open Weather Maps
+   var  currentWeatherIcon="https://openweathermap.org/img/w/" + response.weather[0].icon + ".png";
+   // Offset UTC timezone - using moment.js
+   var currentTimeUTC = response.dt;
+   var currentTimeZoneOffset = response.timezone;
+   var currentTimeZoneOffsetHours = currentTimeZoneOffset / 60 / 60;
+   var currentMoment = moment.unix(currentTimeUTC).utc().utcOffset(currentTimeZoneOffsetHours);
+   // Render cities list
